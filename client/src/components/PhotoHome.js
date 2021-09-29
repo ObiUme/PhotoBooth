@@ -16,7 +16,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { format } from 'date-fns'
-import PhotoUpload from '../components/PhotoUpload'
+
 
 
 const drawerWidth = 240
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     }
 })
 
-function PhotoHome( {homephotos, onLogout, currentUser}){
+function PhotoHome( {homephotos, onLogout, currentUser, handlePhotoDelete}){
     const classes = useStyles()
     const history = useHistory()
     const location = useLocation()
@@ -139,11 +139,11 @@ function PhotoHome( {homephotos, onLogout, currentUser}){
                 <Grid container spacing={4} style={{marginTop: '10vh'}}>
                     {homephotos.map((photolink) => 
                         <Grid item key={photolink.id} xs={12} md={6} lg={4}>
-                            <PhotoHomeCard photolink={photolink}/>
+                            <PhotoHomeCard photolink={photolink} handlePhotoDelete={handlePhotoDelete}/>
                         </Grid>)}
                 </Grid>
             
-            <PhotoUpload/>
+           
             </Container>
         </div>
     )

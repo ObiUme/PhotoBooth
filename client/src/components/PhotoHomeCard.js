@@ -8,6 +8,8 @@ import TextInfoContent from '@mui-treasury/components/content/textInfo';
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
 import { useN04TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n04';
 import { useOverShadowStyles } from '@mui-treasury/styles/shadow/over';
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -21,14 +23,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink }) {
+export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, handlePhotoDelete }) {
   const styles = useStyles();
   const mediaStyles = useFourThreeCardMediaStyles();
   const textCardContentStyles = useN04TextInfoContentStyles();
   const shadowStyles = useOverShadowStyles({ inactive: true });
   
-  const { image, title, description } = photolink
-    // console.log(photo)
+  const { image, title, description, id } = photolink
+
+  
+   
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
@@ -40,10 +44,13 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink }) {
           classes={textCardContentStyles}
           overline={title}
           heading={description}
-          body={
-            'Book a Shoot!!!'
-          }
+        
         />
+        <ButtonGroup variant="text" aria-label="text button group" className={styles.root}>
+            <Button onClick={() => handlePhotoDelete(id)}>Delete</Button>
+            <Button>Edit</Button>
+            <Button>Save</Button>
+        </ButtonGroup>
       </CardContent>
     </Card>
   );

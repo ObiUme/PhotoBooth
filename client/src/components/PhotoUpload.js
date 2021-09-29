@@ -7,6 +7,7 @@ import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from 'react'
+import NewCard from '../components/NewCard'
 
 const useStyles = makeStyles({
     field: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
     }
 })
 
-function PhotoUpload(){
+function PhotoUpload( {handleAddToPhotos, currentUser}){
     const classes = useStyles()
     // const [title, setTitle] = useState('')
     const [image, setImage] = useState('')
@@ -46,8 +47,8 @@ function PhotoUpload(){
     //       },
     // ]
 
-    function handleSubmitImg(e){
-        e.preventDefault()
+    function handleUpload(){
+        
         const data = new FormData()
         data.append('file', image)
         data.append('upload_preset', 'bootypics')
@@ -63,74 +64,43 @@ function PhotoUpload(){
         .catch(err => console.log(err))
 
     }
+
+    // function handleSubmit(e) {
+    //     e.preventDefault()
+    // }
     return (
+        <>
         <Box 
             p={5} 
-            component='form'
-            noValidate
-            autoComplete='off'
-            onSubmit={handleSubmitImg}
         >
             <Typography>
                 Photo Upload
             </Typography>
-            <Paper elevation={3}>
-                {/* <TextField
-                   style={{ marginBotton: '20px'}}
-                    required
-                    id="outlined-required"
-                    label="Title"
-                    defaultValue="Title"
-                    variant='outlined'
-                    fullWidth
-                /> */}
+            <Paper elevation={10}>
                 <TextField
-                   style={{ marginTop: '20px' }}
                     required
                     id="outlined-disabled"
                     label="Image"
                     variant='outlined'
                     fullWidth
-                    defaultValue=""
                     type='file'
-                    name='files[]'
-                    value={image}
+                    defaulttValue={image}
                     onChange={(e) => setImage(e.target.files[0])}
 
                  />
-                 {/* <TextField
-                   style={{ marginTop: '20px' }}
-                    required
-                    id="outlined-select-description"
-                    select
-                    label="Description"
-                    variant='outlined'
-                    fullWidth
-                    helperText='Please select photo description'
-                 >
-                     {photoType.map((option) => <option key={option.value} value={option.value}>
-                         {option.label}
-                         </option>)}
-                 </TextField> */}
-                 {/* <TextField
-                   style={{ marginTop: '20px' }}
-                    required
-                    id="outlined-required"
-                    label="Photographer"
-                    variant='outlined'
-                    fullWidth
-                    defaultValue="Photographer"
-                 /> */}
             </Paper>
             <Button 
                 variant='contained'
                 elevation={5}
                 sx={{align: 'center'}}
                 startIcon={<CloudUploadIcon />}
+                onClick={handleUpload}
             >
                 Upload
             </Button>
         </Box>
+        <NewCard url={url} setUrl={setUrl} handleAddtoPhotos={handleAddToPhotos} currentUser={currentUser}/>
+        </>
     )
 
 }

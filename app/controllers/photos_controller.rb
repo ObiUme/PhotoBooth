@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-        skip_before_action :authorize, only: :index
+        skip_before_action :authorize, only: [:index, :create]
     
     def index 
         render json: Photo.all
@@ -28,6 +28,6 @@ class PhotosController < ApplicationController
     private
 
     def photo_params
-        params.permit(:title, :image, :description, :photographer_name, :photo_data)
+        params.permit(:title, :image, :description, :photographer_name)
     end
 end
