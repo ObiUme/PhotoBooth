@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     }
 })
 
-function PhotoHome( {homephotos, onLogout, currentUser, handlePhotoDelete}){
+function PhotoHome( {homephotos, onLogout, currentUser, handlePhotoDelete, setUserFavorites, handleUserFavoritePhotos }){
     const classes = useStyles()
     const history = useHistory()
     const location = useLocation()
@@ -139,7 +139,7 @@ function PhotoHome( {homephotos, onLogout, currentUser, handlePhotoDelete}){
                 <Grid container spacing={4} style={{marginTop: '10vh'}}>
                     {homephotos.map((photolink) => 
                         <Grid item key={photolink.id} xs={12} md={6} lg={4}>
-                            <PhotoHomeCard photolink={photolink} handlePhotoDelete={handlePhotoDelete}/>
+                            <PhotoHomeCard photolink={photolink} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos}/>
                         </Grid>)}
                 </Grid>
             

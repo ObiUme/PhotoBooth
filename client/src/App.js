@@ -9,6 +9,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState(false)
   const [homephotos, setHomePhotos] = useState([])
+  const [userFavorites, setUserFavorites] = useState([])
+  const [errorMe, setErrorMe] = useState(false)
 
 
   //logout and reset State
@@ -33,6 +35,34 @@ function App() {
     setHomePhotos(updatedPhotos)
   }
 
+  function handleUserFavoritePhotos(obj, currentUser){
+    const newobj ={
+      user_id: obj.user.id,
+      photo_id: obj.id,
+      image: obj.image,
+      description: obj.description,
+      title: obj.title,
+      photographer_name: obj.photographer_name
+
+    }
+    fetch('/user_favorite_photos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newobj)
+    }).then((res) => res.json())
+      .then(data => {
+        
+         setUserFavorites([...userFavorites, data])
+        
+        })
+      
+      
+    
+  }
+
+
   useEffect(() => {
     fetch('/me')
     .then((res) => {
@@ -48,7 +78,7 @@ function App() {
     .then((res) => res.json())
     .then(setHomePhotos)
   }, [])
-  console.log(homephotos)
+  // console.log(homephotos)
 
   return (
     <div>
@@ -66,7 +96,7 @@ function App() {
         />
         <Route
           path='/home'
-          component={() => <PhotoHome onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} />}
+          component={() => <PhotoHome onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} />}
         />
         <Route  
           path='/photoupload'

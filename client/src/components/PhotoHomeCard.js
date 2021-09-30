@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, handlePhotoDelete }) {
+export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, handlePhotoDelete, handleUserFavoritePhotos }) {
   const styles = useStyles();
   const mediaStyles = useFourThreeCardMediaStyles();
   const textCardContentStyles = useN04TextInfoContentStyles();
@@ -49,7 +49,7 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, hand
         <ButtonGroup variant="text" aria-label="text button group" className={styles.root}>
             <Button onClick={() => handlePhotoDelete(id)}>Delete</Button>
             <Button>Edit</Button>
-            <Button>Save</Button>
+            <Button onClick={()=> handleUserFavoritePhotos(photolink)}>Save</Button>
         </ButtonGroup>
       </CardContent>
     </Card>

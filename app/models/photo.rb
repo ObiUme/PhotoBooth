@@ -1,4 +1,5 @@
 class Photo < ApplicationRecord
   belongs_to :user
-  has_one_attached :photo_data
+  has_many :user_favorite_photos
+  has_many :users, through: :user_favorite_photos
 end
