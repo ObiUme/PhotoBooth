@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import PhotoHome from './components/PhotoHome'
 import PhotoUpload from './components/PhotoUpload'
+import UserFavPhotoContainer from './components/UserFavPhotoContainer'
+import EditUserFavPhotoForm from './components/EditUserFavPhotoForm'
 
 function App() {
 
@@ -11,6 +13,10 @@ function App() {
   const [homephotos, setHomePhotos] = useState([])
   const [userFavorites, setUserFavorites] = useState([])
   const [errorMe, setErrorMe] = useState(false)
+  const [editFavPhoto, setEditFavPhoto] = useState('')
+
+
+  // const history = useHistory()
 
 
   //logout and reset State
@@ -27,12 +33,22 @@ function App() {
     setHomePhotos([...homephotos, obj])
   }
 
+  // handle Delete photos from index
   function handlePhotoDelete(id){
     fetch(`/photos/${id}`, {
       method: 'DELETE'
     })
     let updatedPhotos = homephotos.filter(photo => photo.id !== id)
     setHomePhotos(updatedPhotos)
+  }
+
+  // handle delete from fav photos index
+  function handleUserFavDelete(id){
+    fetch(`/user_favorite_photos/${id}`, {
+      method: 'DELETE'
+    })
+    let updatedFavPhotos = userFavorites.filter(photo => photo.id !== id)
+    setUserFavorites(updatedFavPhotos)
   }
 
   function handleUserFavoritePhotos(obj, currentUser){
@@ -55,12 +71,19 @@ function App() {
       .then(data => {
         
          setUserFavorites([...userFavorites, data])
-        
-        })
-      
-      
-    
+        // history.push('/userfavoritephotos')
+        })    
   }
+  
+  function handleUserEditPhoto(obj) {
+    setUserFavorites(userFavorites.map(favphoto => favphoto.id === obj.id ? obj : favphoto))
+  }
+  
+  useEffect(() => {
+    fetch('/user_favorite_photos')
+    .then((res) => res.json())
+    .then(setUserFavorites)
+  }, [])
 
 
   useEffect(() => {
@@ -78,8 +101,8 @@ function App() {
     .then((res) => res.json())
     .then(setHomePhotos)
   }, [])
-  // console.log(homephotos)
-
+ 
+ console.log(userFavorites)
   return (
     <div>
       {/* <SignUp/>
@@ -101,6 +124,14 @@ function App() {
         <Route  
           path='/photoupload'
           component={() => <PhotoUpload handleAddToPhotos={handleAddToPhotos} currentUser={currentUser}/>}
+        />
+        <Route  
+          path='/userfavoritephotos'
+          component={() => <UserFavPhotoContainer userFavorites={userFavorites} setEditFavPhoto={setEditFavPhoto}  handleUserFavDelete={handleUserFavDelete}/>}
+        />
+        <Route  
+          path='/userfavphotoupdate'
+          component={() => <EditUserFavPhotoForm editFavPhoto={editFavPhoto} handleUserEditPhoto={handleUserEditPhoto} />}
         />
       
       </Switch>

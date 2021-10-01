@@ -22,6 +22,12 @@ class PhotosController < ApplicationController
         photo = user.photos.create!(photo_params)  
         render json: photo, status: :created
     end
+
+    def destroy
+        photo = Photo.find(params[:id])
+        photo.destroy
+        head :no_content 
+    end
     
 
 

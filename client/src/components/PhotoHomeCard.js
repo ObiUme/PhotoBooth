@@ -10,6 +10,8 @@ import { useN04TextInfoContentStyles } from '@mui-treasury/styles/textInfoConten
 import { useOverShadowStyles } from '@mui-treasury/styles/shadow/over';
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
+import IconButton from '@material-ui/core/IconButton'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -50,7 +52,11 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, hand
             <Button onClick={() => handlePhotoDelete(id)}>Delete</Button>
             <Button>Edit</Button>
             <Button onClick={()=> handleUserFavoritePhotos(photolink)}>Save</Button>
+            <IconButton>
+              <FavoriteBorderIcon />
+            </IconButton>
         </ButtonGroup>
+    
       </CardContent>
     </Card>
   );
