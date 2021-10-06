@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
-  skip_before_action :authorize, only: :create 
+  skip_before_action :authorize, only: [:create, :photographer ]
     
   def index
       users = User.all
       render json: users 
+  end
+
+  def photographer
+    photographer = User.photographers
+    render json: photographer
   end
 
   def show
@@ -32,6 +37,6 @@ class UsersController < ApplicationController
         private
       
         def user_params
-          params.permit(:username, :password, :is_photographer)
+          params.permit(:username, :password, :is_photographer, :avatar)
         end
 end

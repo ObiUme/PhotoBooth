@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from 'react'
 import NewCard from '../components/NewCard'
+import PhotoHeader from './PhotoHeader'
 
 const useStyles = makeStyles({
     field: {
@@ -69,10 +70,13 @@ function PhotoUpload( {handleAddToPhotos, currentUser}){
     //     e.preventDefault()
     // }
     return (
-        <>
+        <div>
+        <PhotoHeader currentUser={currentUser}/>
         <Box 
-            p={5} 
+            p={5}
+             
         >
+            
             <Typography>
                 Photo Upload
             </Typography>
@@ -80,7 +84,6 @@ function PhotoUpload( {handleAddToPhotos, currentUser}){
                 <TextField
                     required
                     id="outlined-disabled"
-                    label="Image"
                     variant='outlined'
                     fullWidth
                     type='file'
@@ -100,7 +103,7 @@ function PhotoUpload( {handleAddToPhotos, currentUser}){
             </Button>
         </Box>
         <NewCard url={url} setUrl={setUrl} handleAddtoPhotos={handleAddToPhotos} currentUser={currentUser}/>
-        </>
+        </div>
     )
 
 }

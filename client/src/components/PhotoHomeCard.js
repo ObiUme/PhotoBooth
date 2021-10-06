@@ -12,6 +12,11 @@ import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import IconButton from '@material-ui/core/IconButton'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Comment from './Comment'
+import TextField from '@material-ui/core/TextField'
+import SendIcon from '@mui/icons-material/Send';
+import Box from '@material-ui/core/Box'
+import { useState } from 'react'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,13 +30,37 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, handlePhotoDelete, handleUserFavoritePhotos }) {
+export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, handlePhotoDelete, handleUserFavoritePhotos, currentUser, handleAddComment, handleDeleteComment, comments  }) {
+  
+  const [content, setContent] = useState('')
+
   const styles = useStyles();
   const mediaStyles = useFourThreeCardMediaStyles();
   const textCardContentStyles = useN04TextInfoContentStyles();
   const shadowStyles = useOverShadowStyles({ inactive: true });
   
   const { image, title, description, id } = photolink
+
+  function handleSubmit(e){
+    e.preventDefault()
+
+    const newCommentObj = {
+        user_id: currentUser.id,
+        photo_id: id,
+        content: content
+    }
+
+    fetch(`/comments`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newCommentObj)
+  }).then(res => res.json()).then(handleAddComment)
+
+
+
+  }
 
   
    
@@ -46,16 +75,34 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, hand
           classes={textCardContentStyles}
           overline={title}
           heading={description}
-        
+          body={<Comment currentUser={currentUser} comments={comments} photo={photolink} handleDeleteComment={handleDeleteComment} />}
         />
-        <ButtonGroup variant="text" aria-label="text button group" className={styles.root}>
-            <Button onClick={() => handlePhotoDelete(id)}>Delete</Button>
-            <Button>Edit</Button>
+        <ButtonGroup variant="text" aria-label="text button group" className={styles.root} style={{marginLeft: '3vh'}}>
+            {/* <Button onClick={() => handlePhotoDelete(id)}>Delete</Button> */}
+            {/* <Button>Edit</Button> */}
             <Button onClick={()=> handleUserFavoritePhotos(photolink)}>Save</Button>
             <IconButton>
               <FavoriteBorderIcon />
             </IconButton>
         </ButtonGroup>
+        <Box component='form' sx={{display: 'flex', flexDirecton: 'row'}} onSubmit={handleSubmit}>
+          <TextField
+            label='add comment'
+            size='small'
+            variant='outlined'
+            placeholder= 'add comment'
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          <Button
+            variant='contained'
+            size='small'
+            endIcon={<SendIcon/>}
+            type='submit'
+          >
+            Add
+          </Button>
+        </Box>
     
       </CardContent>
     </Card>

@@ -15,6 +15,8 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { useHistory } from 'react-router-dom'
 
+
+
 const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 304,
@@ -73,6 +75,7 @@ export const NewCard = React.memo(function NewCard({ url, setUrl, handleAddToPho
   }
 
   return (
+    
     <Box component='form' onSubmit={handleSubmit} >
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
@@ -145,6 +148,8 @@ export const NewCard = React.memo(function NewCard({ url, setUrl, handleAddToPho
     
     
     </Box>
+    
+  
   );
 });
 

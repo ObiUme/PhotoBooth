@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :user_favorite_photos
   resources :appointments
   resources :photos
   resources :users
+  resources :users do
+    resources :schedules
+  end
+  get '/photographers', to: "users#photographer"
   get "/me", to: "users#show"
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

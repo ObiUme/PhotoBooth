@@ -20,7 +20,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+       PhotoBooth Project
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -33,6 +33,8 @@ const theme = createTheme();
 function SignUp({onLogin}) {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
+    const [avatar, setAvatar] = useState('')
+    const [is_photographer, setIs_photographer] = useState(false)
 
     const history = useHistory();
 
@@ -41,6 +43,8 @@ function SignUp({onLogin}) {
     const newObj = {
         username: username,
         password: password,
+        avatar: avatar,
+        is_photographer: is_photographer,
     }
     fetch('/users', {
         method: 'Post',
@@ -51,6 +55,7 @@ function SignUp({onLogin}) {
     })
     .then(res => res.json())
     .then(onLogin)
+    history.push('/signin')
 
     
   };
@@ -102,18 +107,34 @@ function SignUp({onLogin}) {
                   autoComplete="new-password"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  required
+                  name="avatar"
+                  label="Avatar"
+                  // type="password"
+                  id='avatar'
+                  value={avatar}
+                  onChange={(e)=> setAvatar(e.target.value)}
+                  autoComplete="new-password"
                 />
-              </Grid> */}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value={is_photographer} color="primary" />}
+                  label='Are you a Photographer? Join the Expereince!'
+                  onChange={(e) => setIs_photographer(e.target.checked)}
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color='inherit'
             >
               Sign Up
             </Button>

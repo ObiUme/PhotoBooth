@@ -6,6 +6,10 @@ import PhotoHome from './components/PhotoHome'
 import PhotoUpload from './components/PhotoUpload'
 import UserFavPhotoContainer from './components/UserFavPhotoContainer'
 import EditUserFavPhotoForm from './components/EditUserFavPhotoForm'
+import PhotoHeader from './components/PhotoHeader'
+import Schedule from './components/Schedule'
+import UserAppointmentContainer from './components/UserAppointmentContainer'
+
 
 function App() {
 
@@ -14,10 +18,26 @@ function App() {
   const [userFavorites, setUserFavorites] = useState([])
   const [errorMe, setErrorMe] = useState(false)
   const [editFavPhoto, setEditFavPhoto] = useState('')
+  const [photographers, setPhotographers] = useState([])
+  const [schedules, setSchedules] = useState([])
+  const [comments, setComments] = useState([])
 
 
-  // const history = useHistory()
+console.log(currentUser)
 
+  //add to comments array
+  function handleAddComment(obj){
+    setComments([...comments, obj])
+  }
+
+  //delete a comment
+  function handleDeleteComment(id){
+    fetch(`/comments/${id}`, {
+      method: 'DELETE'
+    })
+    let updatedComments = comments.filter(comment => comment.id !== id);
+    setComments(updatedComments)
+  }
 
   //logout and reset State
   function onLogout(){
@@ -31,6 +51,10 @@ function App() {
   // Add to Photos
   function handleAddToPhotos(obj){
     setHomePhotos([...homephotos, obj])
+  }
+
+  function handleAddtoSchedule(obj){
+    setSchedules([...schedules, obj])
   }
 
   // handle Delete photos from index
@@ -101,8 +125,41 @@ function App() {
     .then((res) => res.json())
     .then(setHomePhotos)
   }, [])
+
+  useEffect(() => {
+    fetch('/comments')
+    .then(res => res.json())
+    .then(setComments)
+  }, [])
+
  
- console.log(userFavorites)
+  // let id = currentUser.id
+
+  useEffect(() => {
+    let id = currentUser.id
+    fetch(`/users/${id}`)
+    .then(res => res.json())
+    .then(data =>setUserFavorites(data.user_favorite_photos))
+  }, [currentUser])
+ 
+  
+  //fetching active photographers
+
+  useEffect(() => {
+    fetch('/photographers')
+    .then(res=> res.json())
+    .then(setPhotographers)
+  }, [])
+
+  //fetch active schedules
+
+  useEffect(()=> {
+    fetch(`/users/${currentUser.id}/schedules`)
+    .then(res=> res.json())
+    .then(setSchedules)
+  }, [currentUser])
+
+//  console.log(userFavorites)
   return (
     <div>
       {/* <SignUp/>
@@ -119,7 +176,7 @@ function App() {
         />
         <Route
           path='/home'
-          component={() => <PhotoHome onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} />}
+          component={() => <PhotoHome setCurrentUser={setCurrentUser} onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} comments={comments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />}
         />
         <Route  
           path='/photoupload'
@@ -127,14 +184,28 @@ function App() {
         />
         <Route  
           path='/userfavoritephotos'
-          component={() => <UserFavPhotoContainer userFavorites={userFavorites} setEditFavPhoto={setEditFavPhoto}  handleUserFavDelete={handleUserFavDelete}/>}
+          component={() => <UserFavPhotoContainer onLogout={onLogout} userFavorites={userFavorites} setEditFavPhoto={setEditFavPhoto}  handleUserFavDelete={handleUserFavDelete} currentUser={currentUser}/>}
         />
         <Route  
           path='/userfavphotoupdate'
-          component={() => <EditUserFavPhotoForm editFavPhoto={editFavPhoto} handleUserEditPhoto={handleUserEditPhoto} />}
+          component={() => <EditUserFavPhotoForm editFavPhoto={editFavPhoto} handleUserEditPhoto={handleUserEditPhoto} currentUser={currentUser}/>}
         />
-      
+        <Route 
+          path='/schedule'
+          component={()=> <Schedule photographers={photographers} currentUser={currentUser} handleAddtoSchedule={handleAddtoSchedule}/>}
+
+        />
+        <Route 
+          path='/appointments'
+          component={() => <UserAppointmentContainer schedules={schedules} onLogout={onLogout} currentUser={currentUser}/>}
+        />
+
+        <Route
+          path='/header'
+          component={() => <PhotoHeader currentUser={currentUser} onLogout={onLogout}/>}
+       />
       </Switch>
+      
     </div>
   );
 }

@@ -14,6 +14,7 @@ import { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { useHistory } from 'react-router-dom'
+import PhotoHeader from './PhotoHeader'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -80,6 +81,8 @@ export const EditUserFavPhotoForm = React.memo(function EditUserFavPhotoForm({ e
   }
 
   return (
+    <div>
+      <PhotoHeader currentUser={currentUser}/>
     <Box component='form' onSubmit={(e) => handleSubmit(e, id)} >
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
@@ -152,6 +155,7 @@ export const EditUserFavPhotoForm = React.memo(function EditUserFavPhotoForm({ e
     
     
     </Box>
+    </div>
   );
 });
 

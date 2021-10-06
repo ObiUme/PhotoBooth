@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const FavPhotoCard = React.memo(function FavPhotoCard({favphotos, setEditFavPhoto, handleUserFavDelete }) {
+export const FavPhotoCard = React.memo(function FavPhotoCard({favphotos, setEditFavPhoto, handleUserFavDelete, onLogout }) {
   const cardStyles = useStyles();
   const mediaStyles = useSlopeCardMediaStyles();
   const shadowStyles = useSoftRiseShadowStyles();
@@ -44,6 +44,7 @@ export const FavPhotoCard = React.memo(function FavPhotoCard({favphotos, setEdit
 
   const { id, image, title, description, photographer_name } = favphotos
   return (
+    <div style={{marginTop: '10vh'}}>
     <Card className={cx(cardStyles.root, shadowStyles.root)}>
       <CardMedia
         classes={mediaStyles}
@@ -69,6 +70,7 @@ export const FavPhotoCard = React.memo(function FavPhotoCard({favphotos, setEdit
         </IconButton>
       </Box>
     </Card>
+    </div>
   );
 });
 

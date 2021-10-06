@@ -1,4 +1,6 @@
-import FavPhotoCard from './FavPhotoCard';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import AppointmentCard from './AppointmentCard'
 import Grid from '@material-ui/core/Grid'
 import cx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,7 +52,8 @@ const useStyles = makeStyles(({ palette }) => ({
     },
   }));
 
-function UserFavPhotoContainer({userFavorites, setEditFavPhoto, handleUserFavDelete, onLogout, currentUser}){
+
+function UserAppointmentContainer({schedules, onLogout, currentUser}) {
 
     const styles = useStyles();
     const shadowStyles = useFadedShadowStyles();
@@ -60,28 +63,30 @@ function UserFavPhotoContainer({userFavorites, setEditFavPhoto, handleUserFavDel
     });
 
     return (
-        <div>
-            <div>
+
+        <>
+             <div>
             <Card className={cx(styles.card, shadowStyles.root)}>
                 <CardContent>
-                <div style={{marginRight: '250vh'}}>
-                    <FavDrawer onLogout={onLogout} currentUser={currentUser}/>
-                </div>
-                    <Avatar className={styles.avatar} src={currentUser.avatar} />
-                        <h3 className={styles.heading}>{currentUser.username}</h3>
-                        
+                    <div style={{marginRight: '250vh'}}>
+                        <FavDrawer onLogout={onLogout} currentUser={currentUser}/>
+                    </div>
+                        <Avatar className={styles.avatar} src={currentUser.avatar} />
+                            <h3 className={styles.heading}>{currentUser.username}</h3>
+                        {/* <span className={styles.subheader}>Poland</span> */}
                 </CardContent>
-                    <Divider light />
+                <Divider light />
             </Card> 
             </div>
             <Grid container spacing={4} >
-                {userFavorites.map((favphotos) => 
-                <Grid item key={favphotos.id} xs={12} md={6} lg={4}>
-                    <FavPhotoCard  onLogout={onLogout} favphotos={favphotos} setEditFavPhoto={setEditFavPhoto} handleUserFavDelete={handleUserFavDelete}/>
+                {schedules.filter(schedule => schedule.client_id === currentUser.id).map((schedule) => 
+                <Grid item key={schedule.id} xs={12} md={6} lg={4}>
+                    <AppointmentCard  schedule={schedule} currentUser={currentUser} />
                     </Grid>)}
             </Grid>
-        </div>
-    )
-}
 
-export default UserFavPhotoContainer;
+        </>
+    )
+
+}
+export default UserAppointmentContainer;
