@@ -16,6 +16,7 @@ import TextInfoContent from '@mui-treasury/components/content/textInfo';
 import EditIcon from '@mui/icons-material/Edit';
 import {NavLink} from 'react-router-dom'
 import DeleteIcon from '@mui/icons-material/Delete';
+import Typography from '@mui/material/Typography';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -57,6 +58,7 @@ export const FavPhotoCard = React.memo(function FavPhotoCard({favphotos, setEdit
           heading={title}
           body={description}
         />
+        <Typography variant='overline'>{photographer_name}</Typography>
       </CardContent>
       <Box px={2} pb={2} mt={-1}>
         <IconButton onClick={()=> setEditFavPhoto(favphotos)} component={NavLink} to='/userfavphotoupdate'>

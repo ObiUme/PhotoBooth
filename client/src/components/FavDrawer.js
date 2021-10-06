@@ -54,7 +54,7 @@ function FavDrawer({onLogout, currentUser}){
           </Box>
           <Divider/>
           <List>
-            <ListItem button onClick={() => history.push('/home')}>
+            <ListItem button onClick={() => history.push('/dashboard')}>
               <ListItemText primary={ 'Home'}/>
             </ListItem>
             <ListItem button onClick={() => history.push('/photoupload')}>
@@ -73,9 +73,9 @@ function FavDrawer({onLogout, currentUser}){
               <ListItemText primary={ 'Logout'}/>
             </ListItem>
             
-            <ListItem button onClick={() => {}}>
+            {/* <ListItem button onClick={() => {}}>
               <ListItemText primary={ 'PlaceHolder'}/>
-            </ListItem>
+            </ListItem> */}
           </List>
         </div>
       </SwipeableDrawer>

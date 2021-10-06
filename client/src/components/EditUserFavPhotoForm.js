@@ -77,7 +77,7 @@ export const EditUserFavPhotoForm = React.memo(function EditUserFavPhotoForm({ e
         setTitle('')
         setDescription('')
         setPhotographer_name('')
-  
+        history.push('/userfavoritephotos')
   }
 
   return (

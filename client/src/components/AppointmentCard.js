@@ -19,7 +19,9 @@ const bull = (
   </Box>
 );
 
-export default function AppointmentCard({schedule}) {
+export default function AppointmentCard({schedule, handleDeleteAppointment}) {
+
+  
   console.log(schedule)
   return (
     <Card sx={{ minWidth: 275 }} style={{marginTop: '5vh'}}>
@@ -31,8 +33,15 @@ export default function AppointmentCard({schedule}) {
           Artist: {schedule.artist_name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Length: {schedule.length}
+          Length: {schedule.length} mins
         </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Client: {schedule.name} 
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Client Contact: {schedule.email} 
+        </Typography>
+
         <Typography variant="body2">
           Shoot-Type: {schedule.shoot_description}
         
@@ -40,10 +49,10 @@ export default function AppointmentCard({schedule}) {
       </CardContent>
       <CardActions>
         <ButtonGroup variant='outlined' aria-label='outlined button group' color='inherit'>
-            <IconButton>
+            {/* <IconButton>
                 <EditIcon/>
-            </IconButton>
-            <IconButton>
+            </IconButton> */}
+            <IconButton onClick={() => handleDeleteAppointment(schedule.id)}>
                 <DeleteIcon/>
             </IconButton>
         </ButtonGroup>

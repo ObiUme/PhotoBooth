@@ -71,7 +71,7 @@ export const NewCard = React.memo(function NewCard({ url, setUrl, handleAddToPho
       setTitle('')
       setDescription('')
       setPhotographer_name('')
-      history.push('/home')
+      history.push('/dashboard')
   }
 
   return (

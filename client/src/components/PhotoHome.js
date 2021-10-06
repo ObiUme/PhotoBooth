@@ -25,6 +25,7 @@ import { useState } from 'react'
 import EditUserProfile from './EditUserProfile'
 import ListAltTwoToneIcon from '@mui/icons-material/ListAltTwoTone';
 import Divider from '@mui/material/Divider';
+import Photobooth from './Photobooth'
 
 
 const drawerWidth = 240
@@ -73,7 +74,7 @@ function PhotoHome( { setCurrentUser, homephotos, onLogout, currentUser, handleP
         {
             text: 'Home',
             icon: <HomeTwoToneIcon/>,
-            path: '/home'
+            path: '/dashboard'
         },
         {
             text: 'Scheduling',
@@ -164,6 +165,7 @@ function PhotoHome( { setCurrentUser, homephotos, onLogout, currentUser, handleP
                         button
                         onClick={handleLogout}
                     >
+                        <br/><br/><br/><br/>
                         <ListItemIcon>
                             <LogoutTwoToneIcon />
                                 <ListItemText primary= 'Logout' />
@@ -177,6 +179,7 @@ function PhotoHome( { setCurrentUser, homephotos, onLogout, currentUser, handleP
                    
                 </Typography> 
                 <Grid container spacing={4} style={{marginTop: '10vh'}}>
+                    
                     {homephotos.map((photolink) => 
                         <Grid item key={photolink.id} xs={12} md={6} lg={4}>
                             <PhotoHomeCard photolink={photolink} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} comments={comments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} currentUser={currentUser}/>

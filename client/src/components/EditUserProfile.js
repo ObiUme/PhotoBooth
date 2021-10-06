@@ -46,7 +46,7 @@ function EditUserProfile({setOpen, open, currentUser, setCurrentUser}){
         }).then(res => res.json())
           .then(setCurrentUser)
 
-          history.push('/home')
+          history.push('/dashboard')
           
     }
 

@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     maxWidth: 343,
     margin: 'auto',
     borderRadius: 120,
-    padding: 50,
+    padding: 40,
   },
   media: {
     borderRadius: 10,
@@ -37,7 +37,7 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, hand
   const styles = useStyles();
   const mediaStyles = useFourThreeCardMediaStyles();
   const textCardContentStyles = useN04TextInfoContentStyles();
-  const shadowStyles = useOverShadowStyles({ inactive: true });
+  const shadowStyles = useOverShadowStyles({ active: true });
   
   const { image, title, description, id } = photolink
 
@@ -47,7 +47,8 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, hand
     const newCommentObj = {
         user_id: currentUser.id,
         photo_id: id,
-        content: content
+        content: content,
+        username: currentUser.username,
     }
 
     fetch(`/comments`, {
@@ -77,13 +78,14 @@ export const PhotoHomeCard = React.memo(function PhotoHomeCard({ photolink, hand
           heading={description}
           body={<Comment currentUser={currentUser} comments={comments} photo={photolink} handleDeleteComment={handleDeleteComment} />}
         />
-        <ButtonGroup variant="text" aria-label="text button group" className={styles.root} style={{marginLeft: '3vh'}}>
+        <ButtonGroup variant="text" aria-label="text button group" className={styles.root}>
+            <IconButton onClick={()=> handleUserFavoritePhotos(photolink)} style={{marginLeft: '8vh', fontSize:'large'}}  >
+                <FavoriteBorderIcon style={{width: 40, height: 50}} />
+              </IconButton>
             {/* <Button onClick={() => handlePhotoDelete(id)}>Delete</Button> */}
             {/* <Button>Edit</Button> */}
-            <Button onClick={()=> handleUserFavoritePhotos(photolink)}>Save</Button>
-            <IconButton>
-              <FavoriteBorderIcon />
-            </IconButton>
+            {/* <Button onClick={()=> handleUserFavoritePhotos(photolink)}>Save</Button> */}
+            
         </ButtonGroup>
         <Box component='form' sx={{display: 'flex', flexDirecton: 'row'}} onSubmit={handleSubmit}>
           <TextField

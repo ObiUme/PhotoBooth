@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function Comment({currentUser, comments, photo, handleDeleteComment}) {
     console.log(comments)
     const classes = useStyles();
-    const filteredComments = comments? comments.filter(comment => comment.photo.id === photo.id) : null
+    const filteredComments = comments ? comments.filter(comment => comment.photo.id === photo.id) : null
     console.log(filteredComments)
 
     
@@ -33,7 +33,7 @@ function Comment({currentUser, comments, photo, handleDeleteComment}) {
         <List className={classes.root}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={currentUser.profile_image} />
+          <Avatar alt="user avatar" src={currentUser.avatar} />
         </ListItemAvatar>
         <ListItemText
           primary={currentUser.username}
@@ -46,7 +46,7 @@ function Comment({currentUser, comments, photo, handleDeleteComment}) {
                 color="textPrimary"
               >
                 {filteredComments.map(comment => 
-                 <div style={{display: 'flex', flexDirection:'row', alignItems: 'center'}}><Typography variant='caption' key={comment.content}>{comment.content}</Typography> 
+                 <div style={{display: 'flex', flexDirection:'row', alignItems: 'center'}}><Typography variant='caption' key={comment.content}>{comment.username} : {comment.content}</Typography> 
                   {currentUser.id !== comment.user.id ? <IconButton disabled
                   onClick={() => handleDeleteComment(comment.id)}><DeleteIcon /></IconButton> :<IconButton
                   onClick={() => handleDeleteComment(comment.id)}><DeleteIcon /></IconButton> }

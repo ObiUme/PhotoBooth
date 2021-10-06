@@ -50,7 +50,7 @@ function SignIn({onLogin}) {
         r.json().then((user) => onLogin(user))
       }
       
-      history.push('/home')
+      history.push('/dashboard')
     })
     
   };

@@ -53,7 +53,7 @@ const useStyles = makeStyles(({ palette }) => ({
   }));
 
 
-function UserAppointmentContainer({schedules, onLogout, currentUser}) {
+function UserAppointmentContainer({schedules, onLogout, currentUser, handleDeleteAppointment}) {
 
     const styles = useStyles();
     const shadowStyles = useFadedShadowStyles();
@@ -81,7 +81,7 @@ function UserAppointmentContainer({schedules, onLogout, currentUser}) {
             <Grid container spacing={4} >
                 {schedules.filter(schedule => schedule.client_id === currentUser.id).map((schedule) => 
                 <Grid item key={schedule.id} xs={12} md={6} lg={4}>
-                    <AppointmentCard  schedule={schedule} currentUser={currentUser} />
+                    <AppointmentCard  schedule={schedule} currentUser={currentUser} handleDeleteAppointment={handleDeleteAppointment}/>
                     </Grid>)}
             </Grid>
 

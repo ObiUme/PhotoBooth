@@ -9,6 +9,7 @@ import EditUserFavPhotoForm from './components/EditUserFavPhotoForm'
 import PhotoHeader from './components/PhotoHeader'
 import Schedule from './components/Schedule'
 import UserAppointmentContainer from './components/UserAppointmentContainer'
+import Photobooth from './components/Photobooth'
 
 
 function App() {
@@ -73,6 +74,14 @@ console.log(currentUser)
     })
     let updatedFavPhotos = userFavorites.filter(photo => photo.id !== id)
     setUserFavorites(updatedFavPhotos)
+  }
+
+  function handleDeleteAppointment(id) {
+    fetch(`/users/${currentUser.id}/schedules/${id}`, {
+      method: 'DELETE'
+    })
+    let updatedSchedules = schedules.filter(schedule => schedule.id !== id)
+    setSchedules(updatedSchedules)
   }
 
   function handleUserFavoritePhotos(obj, currentUser){
@@ -165,6 +174,9 @@ console.log(currentUser)
       {/* <SignUp/>
       <SignIn/> */}
       <Switch>
+
+    
+
         <Route 
           path='/signup'
           component={() => <SignUp onLogin={onLogin}/>}
@@ -175,7 +187,7 @@ console.log(currentUser)
           component={() => <SignIn onLogin={onLogin}/>}
         />
         <Route
-          path='/home'
+           exact path='/dashboard'
           component={() => <PhotoHome setCurrentUser={setCurrentUser} onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} comments={comments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />}
         />
         <Route  
@@ -197,13 +209,19 @@ console.log(currentUser)
         />
         <Route 
           path='/appointments'
-          component={() => <UserAppointmentContainer schedules={schedules} onLogout={onLogout} currentUser={currentUser}/>}
+          component={() => <UserAppointmentContainer schedules={schedules} onLogout={onLogout} currentUser={currentUser} handleDeleteAppointment={handleDeleteAppointment}/>}
         />
 
         <Route
           path='/header'
           component={() => <PhotoHeader currentUser={currentUser} onLogout={onLogout}/>}
        />
+
+        <Route 
+          path='/'
+          component={() => <Photobooth />}
+        />
+
       </Switch>
       
     </div>
