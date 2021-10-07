@@ -26,6 +26,7 @@ import EditUserProfile from './EditUserProfile'
 import ListAltTwoToneIcon from '@mui/icons-material/ListAltTwoTone';
 import Divider from '@mui/material/Divider';
 import Photobooth from './Photobooth'
+import Switch from '@mui/material/Switch';
 
 
 const drawerWidth = 240
@@ -58,7 +59,7 @@ const useStyles = makeStyles({
     }
 })
 
-function PhotoHome( { setCurrentUser, homephotos, onLogout, currentUser, handlePhotoDelete, setUserFavorites, handleUserFavoritePhotos, comments, handleAddComment, handleDeleteComment }){
+function PhotoHome( { darkMode, setCurrentUser, homephotos, onLogout, currentUser, handlePhotoDelete, setUserFavorites, handleUserFavoritePhotos, comments, handleAddComment, handleDeleteComment, handleToggleDarkMode }){
     const classes = useStyles()
     const history = useHistory()
     const location = useLocation()
@@ -131,6 +132,7 @@ function PhotoHome( { setCurrentUser, homephotos, onLogout, currentUser, handleP
                    <IconButton onClick={handleOpenDialogEditUser}>
                         <Avatar src={currentUser.avatar} alt='user' className={classes.avatar}/>
                    </IconButton>
+                   <Switch checked={darkMode} onChange={handleToggleDarkMode}/>
                 </Toolbar> 
             </AppBar>
             <Drawer

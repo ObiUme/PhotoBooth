@@ -10,6 +10,10 @@ import PhotoHeader from './components/PhotoHeader'
 import Schedule from './components/Schedule'
 import UserAppointmentContainer from './components/UserAppointmentContainer'
 import Photobooth from './components/Photobooth'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import CssBaseline from '@mui/material/CssBaseline';
+import Theme from './components/Theme'
 
 
 function App() {
@@ -22,9 +26,9 @@ function App() {
   const [photographers, setPhotographers] = useState([])
   const [schedules, setSchedules] = useState([])
   const [comments, setComments] = useState([])
+  const [darkMode, setDarkMode] = useState(false)
 
 
-console.log(currentUser)
 
   //add to comments array
   function handleAddComment(obj){
@@ -168,14 +172,29 @@ console.log(currentUser)
     .then(setSchedules)
   }, [currentUser])
 
-//  console.log(userFavorites)
-  return (
-    <div>
-      {/* <SignUp/>
-      <SignIn/> */}
-      <Switch>
+  const paletteType = darkMode ? 'dark' : 'light'
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: paletteType
+    },
+    typography: {
+      fontFamiy: 'Reenie Beanie'
+    },
+  })
+
+  function handleToggleDarkMode(){
+    setDarkMode(!darkMode)
+  }
+
+
+  return (
     
+     
+   
+    
+      <ThemeProvider theme={darkTheme}>
+      <Switch>
 
         <Route 
           path='/signup'
@@ -188,7 +207,7 @@ console.log(currentUser)
         />
         <Route
            exact path='/dashboard'
-          component={() => <PhotoHome setCurrentUser={setCurrentUser} onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} comments={comments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />}
+          component={() => <PhotoHome handleToggleDarkMode={handleToggleDarkMode} darkMode={darkMode} setCurrentUser={setCurrentUser} onLogout={onLogout} homephotos={homephotos} currentUser={currentUser} handlePhotoDelete={handlePhotoDelete} setUserFavorites={setUserFavorites} handleUserFavoritePhotos={handleUserFavoritePhotos} comments={comments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />}
         />
         <Route  
           path='/photoupload'
@@ -224,7 +243,11 @@ console.log(currentUser)
 
       </Switch>
       
-    </div>
+      </ThemeProvider>
+    
+   
+    
+   
   );
 }
 
